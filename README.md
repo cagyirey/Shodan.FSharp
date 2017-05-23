@@ -1,7 +1,6 @@
-### Shodan.FSharp
+# Shodan.FSharp [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/4bjkrjqxcneubho9?svg=true)](https://ci.appveyor.com/project/cagyirey/shodan-fsharp) [![Travis Build Status](https://travis-ci.org/cagyirey/Shodan.FSharp.svg?branch=master)](https://travis-ci.org/cagyirey/Shodan.FSharp)
 
-
-## Usage
+### Usage
 
 ```fsharp
 open Shodan.FSharp
