@@ -37,6 +37,7 @@ config.yml
 
 # Script files
 *.fsx
+!build.fsx
 
 # FAKE build binaries
 .fake/
