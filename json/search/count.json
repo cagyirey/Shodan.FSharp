@@ -1,0 +1,28 @@
+{
+    "matches": [],
+    "facets": {
+        "org": [
+            {
+                "count": 286,
+                "value": "Korea Telecom"
+            },
+            {
+                "count": 229,
+                "value": "Comcast Cable"
+            },
+            {
+                "count": 113,
+                "value": "Taiwan Academic Network"
+            },
+            {
+                "count": 107,
+                "value": "University of Minnesota"
+            },
+            {
+                "count": 104,
+                "value": "Tiawan Academic Network (TANet) Information Center"
+            }
+        ]
+    },
+    "total": 12039
+}

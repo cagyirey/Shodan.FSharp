@@ -1,0 +1,12 @@
+{
+    "riak": "Sends a ServerInfo request to Riak",
+    "ethernetip-udp": "A dump of data from a DNP3 outstation",
+    "kerberos": "Checks whether a device is running the Kerberos authentication daemon.",
+    "http": "HTTP banner grabbing module",
+    "mongodb": "Collects system information from the MongoDB daemon.",
+    "pcanywhere-status": "Asks the PC Anywhere status daemon for basic information.",
+    "telnet": "Telnet banner grabbing module",
+    "nodata-tcp": "Connect to a server without sending any data and store whatever it returns.",
+    "pcworx": "Gets information about the Omron PLC.",
+    "modbus": "Grab the Modbus device information via functions 17 and 43."
+}

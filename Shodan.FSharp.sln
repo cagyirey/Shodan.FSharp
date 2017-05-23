@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Shodan.FSharp", "src\Shodan.FSharp\Shodan.FSharp.fsproj", "{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A28ED4A9-6E21-4353-ACEF-BB4226E36D5A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		appyveyor.yml = appyveyor.yml
+		build.cmd = build.cmd
+		build.fsx = build.fsx
+		build.sh = build.sh
+		LICENSE.md = LICENSE.md
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+		README.md = README.md
+		RELEASE_NOTES.md = RELEASE_NOTES.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
