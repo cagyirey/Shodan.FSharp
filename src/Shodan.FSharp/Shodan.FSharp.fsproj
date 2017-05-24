@@ -57,7 +57,7 @@
     <Compile Include="shodanJson.fs" />
     <Compile Include="shodanApi.fs" />
     <Compile Include="net.fs" />
-    <None Include="config.yml">
+    <None Include="shodan.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="paket.references" />

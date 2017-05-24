@@ -32,9 +32,6 @@ UpgradeLog*.htm
 # Exclude F# project specific directories and files
 # ===================================================
 
-# API key
-config.yml
-
 # Script files
 *.fsx
 !build.fsx

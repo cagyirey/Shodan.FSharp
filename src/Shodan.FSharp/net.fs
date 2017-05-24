@@ -1,5 +1,7 @@
 namespace Shodan.FSharp
 
+#nowarn "58"
+
 open System
 open System.Net
 open FSharp.Data
