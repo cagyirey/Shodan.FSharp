@@ -8,7 +8,7 @@ module JsonResponse =
     module private Paths =
 
         [<Literal>]
-        let JsonFolder = __SOURCE_DIRECTORY__ + "../../../json"
+        let JsonFolder = __SOURCE_DIRECTORY__ + "/../../../json"
 
         [<Literal>]
         let ErrorJson = JsonFolder + "/error.json"
