@@ -17,4 +17,4 @@ group Main
 
     nuget FSharp.Data
 	nuget FSharp.Configuration
-	nuget FSharp.Core >= 4.1 redirects: on
+	nuget FSharp.Core >= 4.1 redirects:on
