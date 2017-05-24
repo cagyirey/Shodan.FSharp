@@ -33,11 +33,12 @@ let solutionFile = solutionName + ".sln"
 let projects = [ mainProject ]
 
 let buildDir = "./bin"
+let outputDir = buildDir @@ configuration
 let testBuildDir = "./tests/bin"
 
 let testAssemblies = "tests/bin/**/*Tests*.dll"
 
-let isAppveyorBuild = (environVar >> isNull >> not) "APPVEYOR" 
+let isAppveyorBuild = (environVar >> isNotNullOrEmpty) "APPVEYOR" 
 let appveyorBuildVersion = sprintf "%s-a%s" releaseNotes.AssemblyVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
 Target "Clean" (fun () ->
@@ -60,15 +61,22 @@ Target "AssemblyInfo" (fun () ->
               Attribute.Guid project.Guid ]) projects
 )
 
-Target "CopyLicense" (fun () ->
+Target "CopyLicense" (fun _ ->
     [ "LICENSE.md" ]
-    |> CopyTo (buildDir @@ configuration)
+    |> CopyTo (outputDir)
 )
 
-Target "Build" (fun () ->
+Target "Build" (fun _ ->
     !! solutionFile
     |> MSBuildRelease "" "Rebuild"
     |> ignore
+)
+
+Target "ILMerge" (fun _ -> 
+    let ilmergePath = "./packages/build/ilmerge/tools/ilmerge.exe"
+    let targetBinary = solutionName + ".dll"
+    let mergeFolder = Directory.CreateDirectory (buildDir @@ "merged")
+    ILMerge (fun p -> { p with ToolPath = ilmergePath }) (mergeFolder.FullName @@ targetBinary) (Path.GetFullPath <| outputDir @@ targetBinary)
 )
 
 Target "RunTests" (fun _ ->
@@ -87,6 +95,7 @@ Target "All" DoNothing
     ==> "AssemblyInfo"
     ==> "CopyLicense"
     ==> "Build"
+    =?>("ILMerge", configuration = "Release")
     //==> "RunTests"
     ==> "All"
 

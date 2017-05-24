@@ -2,6 +2,7 @@ group Build
     source https://www.nuget.org/api/v2/
 
     nuget FAKE
+	nuget ILMerge
 
 group Tests
 	source https://www.nuget.org/api/v2/
@@ -17,4 +18,4 @@ group Main
 
     nuget FSharp.Data
 	nuget FSharp.Configuration
-	nuget FSharp.Core >= 4.1 redirects:on
+	nuget FSharp.Core >= 4.1

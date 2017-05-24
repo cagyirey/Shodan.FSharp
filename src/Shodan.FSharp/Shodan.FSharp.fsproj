@@ -64,12 +64,9 @@
     <Compile Include="shodanJson.fs" />
     <Compile Include="shodanApi.fs" />
     <Compile Include="net.fs" />
-    <None Include="shodan.yml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="paket.references" />
+    <EmbeddedResource Include="Shodan.resx" />
     <None Include="Script.fsx" />
-    <Content Include="App.config" />
+    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

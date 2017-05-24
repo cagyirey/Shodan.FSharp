@@ -24,7 +24,7 @@ type Shodan() =
             let! resp = Http.AsyncRequest(
                 string apiEndpoint,
                 headers=httpHeaders,
-                query=("key", Settings.Shodan.SecretKey) :: query,
+                query=("key", Settings.SecretKey) :: query,
                 httpMethod=md)
 
             match resp.Body with

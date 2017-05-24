@@ -2,15 +2,16 @@ FRAMEWORK: NET462
 NUGET
   remote: https://www.nuget.org/api/v2
     FSharp.Configuration (1.2)
-    FSharp.Core (4.1.17) - redirects: on
+    FSharp.Core (4.1.17)
       System.ValueTuple (>= 4.3)
     FSharp.Data (2.3.3)
-    System.ValueTuple (4.3.1) - redirects: on
+    System.ValueTuple (4.3.1)
 
 GROUP Build
 NUGET
   remote: https://www.nuget.org/api/v2
     FAKE (4.61.2)
+    ilmerge (2.14.1208)
 
 GROUP Tests
 FRAMEWORK: NET462

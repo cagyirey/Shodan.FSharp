@@ -9,8 +9,4 @@ module Configuration =
     [<Literal>]
     let ConfigFile = "shodan.yml"
 
-    type Config = YamlConfig<ConfigFile>
-
-    let Settings = Config()
-    
-    let private cfgFile = Settings.LoadAndWatch ConfigFile
+    type Settings = ResXProvider<"shodan.resx">
