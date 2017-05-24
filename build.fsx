@@ -75,8 +75,26 @@ Target "Build" (fun _ ->
 Target "ILMerge" (fun _ -> 
     let ilmergePath = "./packages/build/ilmerge/tools/ilmerge.exe"
     let targetBinary = solutionName + ".dll"
+    let mergedLibs = 
+        Directory.GetFiles(outputDir, "*.dll")
+        |> Set.ofArray
+        |> Set.remove (outputDir @@ targetBinary)
+
+    printfn "\r\n FILES TO MERGE: %s\r\n" (String.concat " " mergedLibs)
+
+
+
+
     let mergeFolder = Directory.CreateDirectory (buildDir @@ "merged")
-    ILMerge (fun p -> { p with ToolPath = ilmergePath }) (mergeFolder.FullName @@ targetBinary) (Path.GetFullPath <| outputDir @@ targetBinary)
+    ILMerge 
+        (fun p -> 
+            { p with 
+                ToolPath = ilmergePath
+                Libraries = mergedLibs
+                AllowDuplicateTypes = AllowDuplicateTypes.AllPublicTypes
+        })
+        (mergeFolder.FullName @@ targetBinary)
+        (Path.GetFullPath <| outputDir @@ targetBinary)
 )
 
 Target "RunTests" (fun _ ->
