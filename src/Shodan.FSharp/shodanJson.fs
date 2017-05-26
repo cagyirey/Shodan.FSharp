@@ -16,7 +16,17 @@ module JsonResponse =
         [<Literal>]
         let ApiInfoJson = JsonFolder + "/apiInfo.json"
 
+        [<Literal>]
+        let AccountInfoJson = JsonFolder + "/accountInfo.json"
+
+        [<Literal>]
+        let HttpHeadersJson = JsonFolder + "/httpheaders.json"
+
+        [<Literal>]
+        let Honeyscore = JsonFolder + "/labs/honeyscore.json"
+
         module Search =
+
             [<Literal>]
             let SearchJson = JsonFolder + "/search/search.json"
 
@@ -45,26 +55,48 @@ module JsonResponse =
 
             [<Literal>]
             let ScanIdJson = JsonFolder + "/scan/scanId.json"
+
+        module DNS =
+            
+            [<Literal>]
+            let ReverseJson = JsonFolder + "/dns/reverse.json"
+
+            [<Literal>]
+            let ResolveJson = JsonFolder + "/dns/resolve.json"
             
 
     type ErrorJson = JsonProvider<ErrorJson>
 
-    type ApiInfoJson = JsonProvider<"apiInfo.json", ResolutionFolder=JsonFolder>
+    type ApiInfoJson = JsonProvider<ApiInfoJson, ResolutionFolder=JsonFolder>
    
-    type AccountInfoJson = JsonProvider<"accountInfo.json", ResolutionFolder=JsonFolder>
-    
+    type AccountInfoJson = JsonProvider<AccountInfoJson, ResolutionFolder=JsonFolder>
+   
     module Scan =
+
         type ScanJson = JsonProvider<Scan.ScanJson>
+
         type ProtocolsJson = JsonProvider<Scan.ProcotolsJson>
+
         type ScanIdJson = JsonProvider<Scan.ScanIdJson>
+
         type InternetJson = JsonProvider<Scan.InternetJson>
 
     module Search =
+
         type CountJson = JsonProvider<Search.CountJson>
+
         type SearchJson = JsonProvider<Search.SearchJson>
+
         type HostInfoJson = JsonProvider<Search.HostInfoJson>
+
         type TokensJson = JsonProvider<Search.TokensJson>
+
         type PortsJson = JsonProvider<Search.PortsJson>
-        
+
+    module DNS =
+
+        type ResolveJson = JsonProvider<DNS.ResolveJson, true>
+
+        type ReverseJson = JsonProvider<DNS.ReverseJson, true>
     
         

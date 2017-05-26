@@ -36,6 +36,9 @@ UpgradeLog*.htm
 *.fsx
 !build.fsx
 
+# API key
+Shodan.resx
+
 # FAKE build binaries
 .fake/
 

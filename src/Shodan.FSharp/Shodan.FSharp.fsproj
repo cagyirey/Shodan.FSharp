@@ -60,7 +60,9 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="config.fs" />
+    <Compile Include="shodanFacets.fs" />
     <Compile Include="shodanQuery.fs" />
+    <Compile Include="shodanLinq.fs" />
     <Compile Include="shodanJson.fs" />
     <Compile Include="shodanApi.fs" />
     <Compile Include="net.fs" />

@@ -41,6 +41,8 @@ let testAssemblies = "tests/bin/**/*Tests*.dll"
 let isAppveyorBuild = (environVar >> isNotNullOrEmpty) "APPVEYOR" 
 let appveyorBuildVersion = sprintf "%s-a%s" releaseNotes.AssemblyVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
+let mergeBinaries = false
+
 Target "Clean" (fun () ->
     CleanDirs [buildDir]
 )
@@ -80,11 +82,6 @@ Target "ILMerge" (fun _ ->
         |> Set.ofArray
         |> Set.remove (outputDir @@ targetBinary)
 
-    printfn "\r\n FILES TO MERGE: %s\r\n" (String.concat " " mergedLibs)
-
-
-
-
     let mergeFolder = Directory.CreateDirectory (buildDir @@ "merged")
     ILMerge 
         (fun p -> 
@@ -113,7 +110,7 @@ Target "All" DoNothing
     ==> "AssemblyInfo"
     ==> "CopyLicense"
     ==> "Build"
-    =?>("ILMerge", configuration = "Release")
+    =?>("ILMerge", configuration = "Release" && mergeBinaries)
     //==> "RunTests"
     ==> "All"
 

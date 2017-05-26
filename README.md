@@ -13,6 +13,6 @@ let main argv =
     printfn "----- Account info -----\nUsername: %s\nCredits: %i\n\Date created: %s\n------------------------"
         accountInfo.DisplayName
         accountInfo.Credits
-        (accountInfo.Created.ToString("dd/mm/yyyy"))
+        (accountInfo.Created.ToString("dd/MM/yyyy"))
     0
 ```

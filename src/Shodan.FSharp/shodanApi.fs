@@ -59,7 +59,7 @@ module internal WebApi =
 
         let tags = query @@ "/tags"
 
-    module Dns =
+    module DNS =
 
         let private dns = shodanBaseUri @@ "/dns"
 
@@ -73,5 +73,10 @@ module internal WebApi =
 
         let httpHeaders =  tools @@ "/httpheaders"
 
-        let myIp = tools @@ "/myip"
+        let myIP = tools @@ "/myip"
 
+    module Experimental =
+
+        let private labs = shodanBaseUri @@ "/labs"
+
+        let honeyscore (ip: IPAddress) = labs @@ sprintf "honeyscore/%O" ip

@@ -9,3 +9,9 @@
 
 * Use an embedded `.resx` file for configuration
 * Use ILMerge
+
+### 0.1.0 - May 26 2017
+
+* Fixes to geolocation filtering
+* Expanded API
+* Added documentation
