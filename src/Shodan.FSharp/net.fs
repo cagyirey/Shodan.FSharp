@@ -20,21 +20,44 @@ module private Utils =
         let version = string <| Assembly.GetExecutingAssembly().GetName().Version
         [HttpRequestHeaders.UserAgent (sprintf "Win32:Shodan.FSharp:%s" version)]
 
-    let makeFacetQuery (query) =
+    let inline makeFacetQuery (query) =
         List.map (fun (k, v) -> sprintf "%s:%s" k v) query
         |> String.concat " "
+
+    let inline queryFromOptionalArgs (args : #seq<string * ^T option>) =
+        List.choose(
+            function 
+            | name, Some flag -> Some(name, string flag)
+            | _ -> None) args
+
+type SortOrder =
+    | Ascending
+    | Descending
+
+type SortKind =
+    | Votes
+    | Timestamp
     
 type Shodan private () =
 
-    static member internal ApiRequest(apiEndpoint: Uri, query, ?method) =
-        let md = defaultArg method HttpMethod.Get
+    static member internal ApiRequest(apiEndpoint: Uri, query, ?httpMethod, ?httpBody: HttpRequestBody) =
+        let md = defaultArg httpMethod HttpMethod.Get
         async {
-            let! resp = Http.AsyncRequest(
-                string apiEndpoint,
-                headers=httpHeaders,
-                query=("key", Settings.SecretKey) :: query,
-                httpMethod=md)
-
+            let! resp = 
+                match httpBody with
+                | None -> 
+                    Http.AsyncRequest(
+                        string apiEndpoint,
+                        headers=httpHeaders,
+                        query=("key", Settings.SecretKey) :: query,
+                        httpMethod=md)
+                | Some body -> 
+                    Http.AsyncRequest(
+                        string apiEndpoint,
+                        headers=httpHeaders,
+                        query=("key", Settings.SecretKey) :: query,
+                        body=body,
+                        httpMethod=md)
             match resp.Body with
             | Text body  when resp.StatusCode = 200 -> return body
             | Text err -> return raise (ShodanError (ErrorJson.Parse err).Error)
@@ -79,7 +102,7 @@ type Search private () =
                 List.choose(function 
                     | name, Some flag -> Some(name, string flag)
                     | _ -> None
-                ) ["history", history; "minify", minify]
+                ) [ "history", history; "minify", minify ]
                 
             let! json = Shodan.ApiRequest(WebApi.Search.info host, query)
             return Search.HostInfoJson.Parse json
@@ -125,19 +148,19 @@ type Scan private () =
             let! json = 
                 Shodan.ApiRequest(
                     WebApi.Scan.scan,
-                    ["ips", String.concat "," targets],
+                    [ "ips", String.concat "," targets ],
                     HttpMethod.Post)
             return Scan.ScanJson.Parse json
         }
 
     /// Use this method to request Shodan to crawl the Internet for a specific port.
-    static member Internet(port, protocol) =
+    static member Internet(port: int, protocol) =
         async {
             let! json = 
                 Shodan.ApiRequest(
                     WebApi.Scan.scanInternet,
-                    ["port", string port
-                     "protocol", protocol],
+                    [ "port", string port
+                      "protocol", protocol ],
                     HttpMethod.Post)
             return Scan.InternetJson.Parse json
         }
@@ -167,6 +190,73 @@ type DNS private () =
 
             let! json = Shodan.ApiRequest(WebApi.DNS.reverse, ["ips", query])
             return DNS.ReverseJson.Parse json
+        }
+
+type Alerts private () =
+
+    /// Returns the information about a specific network alert.
+    static member GetAlert(id) =
+        async {
+            let! json = Shodan.ApiRequest(WebApi.Alert.info id, [])
+            return Alert.AlertInfoJson.Parse json
+        }
+
+    /// Returns a listing of all the network alerts that are currently active on the account.
+    static member EnumerateAlerts () =
+        async {
+            let! json = Shodan.ApiRequest(WebApi.Alert.enumerate, [])
+            return Alert.EnumerateAlertsJson.Parse json
+        }
+
+    /// Use this method to create a network alert for a defined IP/ netblock which can be used to subscribe to changes/ events that are discovered within that range.
+    static member CreateAlert(alert) =
+        async {
+            do!
+                Shodan.ApiRequest(WebApi.Alert.create, [], HttpMethod.Post, TextRequest alert)
+                |> Async.Ignore
+        }
+
+    /// Remove the specified network alert.
+    static member DeleteAlert(id) =
+        async {
+            do!
+                Shodan.ApiRequest(WebApi.Alert.delete id, [], HttpMethod.Delete)
+                |> Async.Ignore
+        }
+
+type Directory private () =
+
+    /// Use this method to obtain a list of search queries that users have saved in Shodan.
+    static member Query(?page, ?sort, ?order) =
+        async {
+            let! json = 
+                Shodan.ApiRequest(
+                    WebApi.Directory.query, 
+                    queryFromOptionalArgs 
+                        ["page", page
+                         "sort", Option.map (sprintf "%O") sort
+                         "order", Option.map(function | Ascending -> "asc" | Descending -> "desc") order ])
+
+            return Directory.QueryJson.Parse json
+        }
+
+    static member Search(query, ?page) =
+        async {
+            let! json = 
+                Shodan.ApiRequest(
+                    WebApi.Directory.search,
+                    [ "query", query
+                      "page", string (defaultArg page 1) ])  
+            return Directory.SearchJson.Parse json
+        }
+
+    static member Tags(?size) =
+        async {
+            let! json =
+                Shodan.ApiRequest(
+                    WebApi.Directory.tags,
+                    queryFromOptionalArgs [ "size", size ])
+            return Directory.TagsJson.Parse json
         }
 
 type Experimental private () =

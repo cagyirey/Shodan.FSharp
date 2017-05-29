@@ -45,6 +45,8 @@ module internal WebApi =
             
         let alert = shodanApi @@ "/alert"
 
+        let create = alert
+
         let enumerate = alert @@ "/info"
 
         let delete id = alert @@ id

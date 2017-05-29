@@ -56,6 +56,18 @@ module JsonResponse =
             [<Literal>]
             let ScanIdJson = JsonFolder + "/scan/scanId.json"
 
+        module Directory = 
+            
+            // note: these return the same schema
+            [<Literal>]
+            let QueryJson = JsonFolder + "/query/search.json"
+
+            [<Literal>]
+            let SearchJson = JsonFolder + "/query/search.json"
+
+            [<Literal>]
+            let TagsJson = JsonFolder + "/query/tags.json"
+
         module DNS =
             
             [<Literal>]
@@ -63,7 +75,18 @@ module JsonResponse =
 
             [<Literal>]
             let ResolveJson = JsonFolder + "/dns/resolve.json"
+
+        module Alert =
+
+            [<Literal>]
+            let AlertJson = JsonFolder + "/alert/alert.json"
+
+            [<Literal>]
+            let AlertInfoJson = JsonFolder + "/alert/alertInfo.json"
             
+            [<Literal>]
+            let EnumerateAlertsJson = JsonFolder + "/alert/enumerate.json"
+
 
     type ErrorJson = JsonProvider<ErrorJson>
 
@@ -93,10 +116,24 @@ module JsonResponse =
 
         type PortsJson = JsonProvider<Search.PortsJson>
 
+    module Directory =
+
+        type QueryJson = JsonProvider<Directory.QueryJson>
+
+        type SearchJson = JsonProvider<Directory.SearchJson>
+
+        type TagsJson = JsonProvider<Directory.TagsJson>
+
     module DNS =
 
         type ResolveJson = JsonProvider<DNS.ResolveJson, true>
 
         type ReverseJson = JsonProvider<DNS.ReverseJson, true>
     
+    module Alert =
         
+        type AlertJson = JsonProvider<Alert.AlertJson>
+
+        type AlertInfoJson = JsonProvider<Alert.AlertInfoJson>
+
+        type EnumerateAlertsJson = JsonProvider<Alert.EnumerateAlertsJson>

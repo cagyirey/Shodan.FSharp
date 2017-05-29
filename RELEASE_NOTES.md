@@ -15,3 +15,7 @@
 * Fixes to geolocation filtering
 * Expanded API
 * Added documentation
+
+### 0.1.1 - May 28 2017
+
+* Added network alert and search query web APIs
