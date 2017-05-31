@@ -1,73 +1,73 @@
 {
-    "region_code": null,
-    "ip": "41.21.249.170",
-    "area_code": null,
-    "country_name": "South Africa",
-    "hostnames": [],
-    "postal_code": null,
-    "dma_code": null,
-    "country_code": "ZA",
-    "data": [
-        {
-            "product": "Siemens HiPath 3000 telnetd",
-            "os": null,
-            "timestamp": "2014-01-12T18:25:41.370550",
-            "isp": "Vodacom",
-            "asn": "AS36994",
-            "banner": "\r************************\n\r*  HiPath 3000 Telnet  *\n\r*  ------------------  *\n\r*                      *\n\r*  Adjust the Telnet   *\n\r*  window to the       *\n\r*  visible frame       *\n\r*                      *\n\r************************\n\r",
-            "hostnames": [],
-            "devicetype": "firewall",
-            "location": {
-                "city": null,
-                "region_code": null,
-                "area_code": null,
-                "longitude": 24.0,
-                "country_code3": "ZAF",
-                "country_name": "South Africa",
-                "postal_code": null,
-                "dma_code": null,
-                "country_code": "ZA",
-                "latitude": -29.0
-            },
-            "ip": "41.21.249.170",
-            "domains": [],
-            "org": "Vodacom",
-            "port": 23,
-            "opts": {}
-        },
-        {
-            "os": null,
-            "timestamp": "2014-01-01T01:28:55.903352",
-            "isp": "Vodacom",
-            "asn": "AS36994",
-            "banner": "SNMP agent for HiPath 3000/5000 V5.x",
-            "hostnames": [],
-            "location": {
-                "city": null,
-                "region_code": null,
-                "area_code": null,
-                "longitude": 24.0,
-                "country_code3": "ZAF",
-                "country_name": "South Africa",
-                "postal_code": null,
-                "dma_code": null,
-                "country_code": "ZA",
-                "latitude": -29.0
-            },
-            "ip": "41.21.249.170",
-            "domains": [],
-            "org": "Vodacom",
-            "port": 161,
-            "opts": {}
-        }
-    ],
-    "city": null,
-    "longitude": 24.0,
-    "country_code3": "ZAF",
-    "latitude": -29.0,
-    "os": null,
-    "ports": [
-        23,
-        161
-    ]
+	"region_code": "",
+	"ip": "41.21.249.170",
+	"area_code": "",
+	"country_name": "South Africa",
+	"hostnames": [ "google.com" ],
+	"postal_code": "",
+	"dma_code": "",
+	"country_code": "ZA",
+	"data": [
+		{
+			"product": "Siemens HiPath 3000 telnetd",
+			"os": "",
+			"timestamp": "2014-01-12T18:25:41.370550",
+			"isp": "Vodacom",
+			"asn": "AS36994",
+			"banner": "\r************************\n\r*  HiPath 3000 Telnet  *\n\r*  ------------------  *\n\r*                      *\n\r*  Adjust the Telnet   *\n\r*  window to the       *\n\r*  visible frame       *\n\r*                      *\n\r************************\n\r",
+			"hostnames": [ "google.com" ],
+			"devicetype": "firewall",
+									"location": {
+										"city": "",
+										"region_code": "",
+										"area_code": "",
+										"longitude": 24.0,
+										"country_code3": "ZAF",
+										"country_name": "South Africa",
+										"postal_code": "",
+										"dma_code": "",
+										"country_code": "ZA",
+										"latitude": -29.0
+									},
+			"ip": "41.21.249.170",
+			"domains": [ "google.com" ],
+			"org": "Vodacom",
+			"port": 23,
+			"opts": {}
+		},
+		{
+			"os": "",
+			"timestamp": "2014-01-01T01:28:55.903352",
+			"isp": "Vodacom",
+			"asn": "AS36994",
+			"banner": "SNMP agent for HiPath 3000/5000 V5.x",
+			"hostnames": [ "google.com" ],
+			"location": {
+				"city": "",
+				"region_code": "",
+				"area_code": "",
+				"longitude": 24.0,
+				"country_code3": "ZAF",
+				"country_name": "South Africa",
+				"postal_code": "",
+				"dma_code": "",
+				"country_code": "ZA",
+				"latitude": -29.0
+			},
+			"ip": "41.21.249.170",
+			"domains": [],
+			"org": "Vodacom",
+			"port": 161,
+			"opts": {}
+		}
+	],
+	"city": "",
+	"longitude": 24.0,
+	"country_code3": "ZAF",
+	"latitude": -29.0,
+	"os": "",
+	"ports": [
+		23,
+		161
+	]
 }

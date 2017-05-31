@@ -7,6 +7,6 @@ module Configuration =
     open System.IO
 
     [<Literal>]
-    let ConfigFile = "shodan.yml"
+    let ConfigFile = __SOURCE_DIRECTORY__ + "/shodan.resx"
 
-    type Settings = ResXProvider<"shodan.resx">
+    type Settings = ResXProvider<ConfigFile>

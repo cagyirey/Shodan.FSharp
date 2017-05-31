@@ -21,6 +21,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JSON", "JSON", "{F6845FC2-5C65-46FE-BDF2-7B0D4DD0C3EC}"
+	ProjectSection(SolutionItems) = preProject
+		json\accountInfo.json = json\accountInfo.json
+		json\alert\alert.json = json\alert\alert.json
+		json\alert\alertInfo.json = json\alert\alertInfo.json
+		json\apiInfo.json = json\apiInfo.json
+		json\search\count.json = json\search\count.json
+		json\alert\enumerate.json = json\alert\enumerate.json
+		json\error.json = json\error.json
+		json\search\host.json = json\search\host.json
+		json\scan\internet.json = json\scan\internet.json
+		json\search\ports.json = json\search\ports.json
+		json\scan\protocols.json = json\scan\protocols.json
+		json\dns\resolve.json = json\dns\resolve.json
+		json\dns\reverse.json = json\dns\reverse.json
+		json\scan\scan.json = json\scan\scan.json
+		json\scan\scanId.json = json\scan\scanId.json
+		json\query\search.json = json\query\search.json
+		json\search\search.json = json\search\search.json
+		json\query\tags.json = json\query\tags.json
+		json\search\tokens.json = json\search\tokens.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
