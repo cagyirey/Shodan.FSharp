@@ -6,10 +6,6 @@ open System.Net
 module Query = 
 
     let private dateString (date: DateTime) = date.ToString("dd/MM/yyyy")
-    
-    type GeoBounding =
-        | Radius of float
-        | Box of float * float
 
     /// Only show results that were collected after the given date (dd/mm/yyyy).
     let After (date: DateTime) = Facets.After, dateString date
@@ -24,11 +20,7 @@ module Query =
     let City (city: string) = Facets.City, city
 
     /// Filter by geographical 
-    let Geo (lat, long) bounding =
-        Facets.Geo, 
-        match bounding with
-        | Radius r -> sprintf "%G,%G,%G" lat long r 
-        | Box(l, r) -> sprintf "%G,%G,%G,%G" lat long l r
+    let Geo (lat, long) bounding = Facets.Geo, sprintf "%G,%G,%O" lat long bounding
 
     // Hash of the "data" property
     let Hash (hash: string) = Facets.Hash, hash
@@ -46,7 +38,7 @@ module Query =
     let ISP (isp: string) = Facets.ISP, isp
 
     /// Find devices depending on their connection to the Internet.
-    let Link (_: string) = Facets.Link, raise <| NotImplementedException() //what is this supposed to be?
+    let Link (link: string) = Facets.Link, link
 
     /// Search by netblock using CIDR notation; ex: net:69.84.207.0/24
     let Netblock (mask: IPAddress) block = Facets.Netblock, sprintf "%O/%i" mask block

@@ -30,14 +30,6 @@ module private Utils =
             | name, Some flag -> Some(name, string flag)
             | _ -> None) args
 
-type SortOrder =
-    | Ascending
-    | Descending
-
-type SortKind =
-    | Votes
-    | Timestamp
-    
 type Shodan private () =
 
     static member internal ApiRequest(apiEndpoint: Uri, query, ?httpMethod, ?httpBody: HttpRequestBody) =
@@ -94,38 +86,35 @@ type Shodan private () =
         }
 
 type Search private () =
+
     /// Returns all services that have been found on the given host IP.
     static member HostInfo(host: IPAddress, ?history: bool, ?minify: bool) = 
         async { 
-            // todo: simplify the mapping of GET query fields
-            let query = 
-                List.choose(function 
-                    | name, Some flag -> Some(name, string flag)
-                    | _ -> None
-                ) [ "history", history; "minify", minify ]
-                
-            let! json = Shodan.ApiRequest(WebApi.Search.info host, query)
+            let! json = Shodan.ApiRequest(WebApi.Search.info host, queryFromOptionalArgs [ "history", history; "minify", minify ])
             return Search.HostInfoJson.Parse json
         }
+
     /// Search Shodan using the same query syntax as the website and use facets to get summary information for different properties.
-    static member Search(query, page) =
+    static member Search(query, ?facets, ?page) =
         async { 
-            let! json = Shodan.ApiRequest(WebApi.Search.search, ["query", makeFacetQuery query])
+            let! json = Shodan.ApiRequest(WebApi.Search.search, ("query", makeFacetQuery query) :: queryFromOptionalArgs ["facets", facets; "page", page])
             return Search.SearchJson.Parse json
         }
-    
+
+    /// This method behaves identical to `Shodan.Search` with the only difference that this method does not return any host results, it only returns the total number of results that matched the query and any facet information that was requested. As a result this method does not consume query credits.
+    static member Count(query, ?facets, ?page) =
+        async { 
+            let! json = Shodan.ApiRequest(WebApi.Search.count, ("query", makeFacetQuery query) :: queryFromOptionalArgs ["facets", facets; "page", page])
+            return Search.CountJson.Parse json
+        }
+
     /// This method lets you determine which filters are being used by the query string and what parameters were provided to the filters.
     static member Tokens(query) =
         async {
             let! json = Shodan.ApiRequest(WebApi.Search.tokens, ["query", makeFacetQuery query])
             return Search.TokensJson.Parse json
         }
-    /// This method behaves identical to `Shodan.Search` with the only difference that this method does not return any host results, it only returns the total number of results that matched the query and any facet information that was requested. As a result this method does not consume query credits.
-    static member Count(query) =
-        async { 
-            let! json = Shodan.ApiRequest(WebApi.Search.count, ["query", makeFacetQuery query])
-            return Search.CountJson.Parse json
-        }
+
     /// This method returns a list of port numbers that the crawlers are looking for.
     static member Ports () =
         async {
@@ -152,7 +141,7 @@ type Scan private () =
                     HttpMethod.Post)
             return Scan.ScanJson.Parse json
         }
-
+        
     /// Use this method to request Shodan to crawl the Internet for a specific port.
     static member Internet(port: int, protocol) =
         async {
@@ -227,7 +216,7 @@ type Alerts private () =
 type Directory private () =
 
     /// Use this method to obtain a list of search queries that users have saved in Shodan.
-    static member Query(?page, ?sort, ?order) =
+    static member Query(?page, ?sort : QuerySort, ?order: QueryOrder) =
         async {
             let! json = 
                 Shodan.ApiRequest(
@@ -239,7 +228,8 @@ type Directory private () =
 
             return Directory.QueryJson.Parse json
         }
-
+    
+    /// Use this method to search the directory of search queries that users have saved in Shodan.
     static member Search(query, ?page) =
         async {
             let! json = 
@@ -250,6 +240,7 @@ type Directory private () =
             return Directory.SearchJson.Parse json
         }
 
+    /// Use this method to obtain a list of popular tags for the saved search queries in Shodan.
     static member Tags(?size) =
         async {
             let! json =

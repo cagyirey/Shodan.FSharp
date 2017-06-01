@@ -19,3 +19,7 @@
 ### 0.1.1 - May 28 2017
 
 * Added network alert and search query web APIs
+
+### 0.1.2 - May 31 2017
+
+* Better type modeling for search queries
