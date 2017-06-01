@@ -4,12 +4,14 @@ open System
 open System.Net
 
 module internal WebApi =
+
     [<AutoOpen>]
     module private Utils =
 
-        let inline combinePaths path1 (path2 : string) = Uri(path1, path2) 
+        let inline relativeUri (uri: Uri) (path2 : string) =
+           Uri <| sprintf "%s/%s" (uri.AbsoluteUri.Trim('/')) (path2.TrimStart('/'))
  
-        let inline (@@) path1 path2 = combinePaths path1 path2
+        let inline (@@) path1 path2 = relativeUri path1 path2
 
     let private shodanBaseUri = Uri "https://api.shodan.io"
 
@@ -71,7 +73,7 @@ module internal WebApi =
 
     module Tools = 
 
-        let private tools = shodanBaseUri @@ "/dns"
+        let private tools = shodanBaseUri @@ "/tools"
 
         let httpHeaders =  tools @@ "/httpheaders"
 

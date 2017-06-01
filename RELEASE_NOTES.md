@@ -23,3 +23,8 @@
 ### 0.1.2 - May 31 2017
 
 * Better type modeling for search queries
+
+### 0.1.3 - June 1 2017
+* Fix: `/tools/` web APIs point to the correct APIs
+* Fix: URI concatenation works
+* Added: more type modeling to web APIs

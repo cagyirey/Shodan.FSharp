@@ -4,14 +4,25 @@ type QueryOrder =
     | Ascending
     | Descending
     with 
-        member x.ToString() = function
-        | Ascending -> "asc"
-        | Descending -> "desc"
+        override x.ToString() = 
+            match x with
+            | Ascending -> "asc"
+            | Descending -> "desc"
 
 type QuerySort =
     | Votes
     | Timestamp
-    
+
+type GeoBounding =
+    | Radius of float
+    | Box of float * float
+    with 
+        override x.ToString() = 
+            match x with
+            | Radius r -> sprintf "%G" r 
+            | Box(l, r) -> sprintf "%G,%G" l r
+
+[<RequireQualifiedAccess>]
 module LinkType = 
 
     [<Literal>]
@@ -52,12 +63,3 @@ module LinkType =
 
     [<Literal>]
     let AX25RadioModem = "AX.25 radio modem"
-
-type GeoBounding =
-    | Radius of float
-    | Box of float * float
-    with 
-    member x.ToString() = 
-        match x with
-        | Radius r -> sprintf "%G" r 
-        | Box(l, r) -> sprintf "%G,%G" l r
