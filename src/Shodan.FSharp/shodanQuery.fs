@@ -159,16 +159,16 @@ module Query =
     module Telnet = 
         
         /// Search all the options
-        let Options opts = Facets.Telnet.Options, opts
+        let Options (opts: #seq<string>) = Facets.Telnet.Options, String.concat "," opts
 
         /// The server requests the client to support these options
-        let Do doOpts = Facets.Telnet.Do, doOpts
+        let Do (doOpts: #seq<string>)  = Facets.Telnet.Do, String.concat "," doOpts
 
         /// The server requests the client to not support these options
-        let Dont dontOpts = Facets.Telnet.Dont, dontOpts
+        let Dont (dontOpts: #seq<string>) = Facets.Telnet.Dont, String.concat "," dontOpts
 
         /// The server supports these options
-        let Will willOpts = Facets.Telnet.Will, willOpts
+        let Will (willOpts: #seq<string>) = Facets.Telnet.Will, String.concat "," willOpts
 
         /// The server doesnt support these options
-        let Wont wontOpts = Facets.Telnet.Wont, wontOpts
+        let Wont (wontOpts: #seq<string>) = Facets.Telnet.Wont, String.concat "," wontOpts

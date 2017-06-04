@@ -90,9 +90,9 @@ module JsonResponse =
 
     type ErrorJson = JsonProvider<ErrorJson>
 
-    type ApiInfoJson = JsonProvider<ApiInfoJson, ResolutionFolder=JsonFolder>
+    type ApiInfoJson = JsonProvider<ApiInfoJson>
    
-    type AccountInfoJson = JsonProvider<AccountInfoJson, ResolutionFolder=JsonFolder>
+    type AccountInfoJson = JsonProvider<AccountInfoJson>
    
     module Scan =
 
@@ -123,12 +123,6 @@ module JsonResponse =
         type SearchJson = JsonProvider<Directory.SearchJson>
 
         type TagsJson = JsonProvider<Directory.TagsJson>
-
-    module DNS =
-
-        type ResolveJson = JsonProvider<DNS.ResolveJson, true>
-
-        type ReverseJson = JsonProvider<DNS.ReverseJson, true>
     
     module Alert =
         

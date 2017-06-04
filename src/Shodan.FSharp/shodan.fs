@@ -1,5 +1,7 @@
 ﻿namespace Shodan.FSharp
 
+exception ShodanError of string
+
 type QueryOrder =
     | Ascending
     | Descending

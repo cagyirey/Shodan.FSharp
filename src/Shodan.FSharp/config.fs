@@ -4,7 +4,6 @@ open System
 open FSharp.Configuration
 
 module Configuration =
-    open System.IO
 
     [<Literal>]
     let ConfigFile = "Shodan.resx"

@@ -11,8 +11,6 @@ open Shodan.FSharp
 open Shodan.FSharp.JsonResponse
 open System.Reflection
 
-exception ShodanError of string
-
 [<AutoOpen>]
 module private Utils = 
 
@@ -43,14 +41,16 @@ type Shodan private () =
                         string apiEndpoint,
                         headers=httpHeaders,
                         query=("key", Settings.SecretKey) :: query,
-                        httpMethod=md)
+                        httpMethod=md,
+                        silentHttpErrors=true)
                 | Some body -> 
                     Http.AsyncRequest(
                         string apiEndpoint,
                         headers=httpHeaders,
                         query=("key", Settings.SecretKey) :: query,
                         body=body,
-                        httpMethod=md)
+                        httpMethod=md,
+                        silentHttpErrors=true)
             match resp.Body with
             | Text body  when resp.StatusCode = 200 -> return body
             | Text err -> return raise (ShodanError (ErrorJson.Parse err).Error)
@@ -168,21 +168,27 @@ type Scan private () =
 type DNS private () =
 
     /// Look up the IP address for the provided list of hostnames.
-    static member Resolve(hosts) = 
+    static member Resolve(hosts: #seq<string>) = 
         async {
             let! json = Shodan.ApiRequest(WebApi.DNS.resolve, ["hostnames", String.concat "," hosts])
-            return DNS.ResolveJson.Parse json
+            
+            return 
+                [| for (k, v) in (JsonValue.Parse json).Properties () do 
+                    yield k, v.AsString() |> IPAddress.Parse |]
         }
 
     /// Look up the hostnames that have been defined for the given list of IP addresses.
-    static member Reverse(ips) =
+    static member Reverse(ips: #seq<IPAddress>) =
         async {
             let query = 
                 Seq.map (fun (ip: IPAddress) -> string ip) ips
                 |> String.concat ","
 
             let! json = Shodan.ApiRequest(WebApi.DNS.reverse, ["ips", query])
-            return DNS.ReverseJson.Parse json
+            
+            return 
+                [| for (k, v) in (JsonValue.Parse json).Properties () do
+                    yield IPAddress.Parse k, v.AsArray() |> Array.map(fun jsVal -> jsVal.AsString ()) |]
         }
 
 type Alerts private () =
@@ -191,7 +197,7 @@ type Alerts private () =
     static member GetAlert(id) =
         async {
             let! json = Shodan.ApiRequest(WebApi.Alert.info id, [])
-            return Alert.AlertInfoJson.Parse json
+            return (Alert.AlertInfoJson.Parse json)
         }
 
     /// Returns a listing of all the network alerts that are currently active on the account.
@@ -222,7 +228,6 @@ type Directory private () =
     /// Use this method to obtain a list of search queries that users have saved in Shodan.
     static member Query(?page: int, ?sort : QuerySort, ?order: QueryOrder) =
         async {
-
             let! json = 
                 Shodan.ApiRequest(
                     WebApi.Directory.query,
@@ -235,13 +240,13 @@ type Directory private () =
         }
     
     /// Use this method to search the directory of search queries that users have saved in Shodan.
-    static member Search(query, ?page) =
+    static member Search(query, ?page: int) =
         async {
             let! json = 
                 Shodan.ApiRequest(
                     WebApi.Directory.search,
                     ("query", query) ::
-                    Option.fold(fun _ pg -> pg) [] page)
+                    Option.fold(fun _ pg -> ["page", string pg]) [] page)
             return Directory.SearchJson.Parse json
         }
 

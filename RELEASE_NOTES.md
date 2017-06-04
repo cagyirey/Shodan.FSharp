@@ -28,3 +28,9 @@
 * Fix: `/tools/` web APIs point to the correct APIs
 * Fix: URI concatenation works
 * Added: more type modeling to web APIs
+
+## 0.1.4 - June 4 2017
+
+* Added typed queries for telnet options
+* Changed the result type of DNS queries
+* Forward non-200 HTTP statuses through 'ShodanException'
