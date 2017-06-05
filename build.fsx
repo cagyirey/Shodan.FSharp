@@ -41,10 +41,8 @@ let testAssemblies = "tests/bin/**/*Tests*.dll"
 let isAppveyorBuild = (environVar >> isNotNullOrEmpty) "APPVEYOR" 
 let appveyorBuildVersion = sprintf "%s-a%s" releaseNotes.AssemblyVersion (DateTime.UtcNow.ToString "yyMMddHHmm")
 
-let mergeBinaries = false
-
 Target "Clean" (fun () ->
-    CleanDirs [buildDir]
+    CleanDirs [buildDir; testBuildDir]
 )
 
 Target "AppveyorBuildVersion" (fun () ->
@@ -74,26 +72,6 @@ Target "Build" (fun _ ->
     |> ignore
 )
 
-Target "ILMerge" (fun _ -> 
-    let ilmergePath = "./packages/build/ilmerge/tools/ilmerge.exe"
-    let targetBinary = solutionName + ".dll"
-    let mergedLibs = 
-        Directory.GetFiles(outputDir, "*.dll")
-        |> Set.ofArray
-        |> Set.remove (outputDir @@ targetBinary)
-
-    let mergeFolder = Directory.CreateDirectory (buildDir @@ "merged")
-    ILMerge 
-        (fun p -> 
-            { p with 
-                ToolPath = ilmergePath
-                Libraries = mergedLibs
-                AllowDuplicateTypes = AllowDuplicateTypes.AllPublicTypes
-        })
-        (mergeFolder.FullName @@ targetBinary)
-        (Path.GetFullPath <| outputDir @@ targetBinary)
-)
-
 Target "RunTests" (fun _ ->
     !! testAssemblies
     |> NUnit3 (fun p ->
@@ -110,8 +88,7 @@ Target "All" DoNothing
     ==> "AssemblyInfo"
     ==> "CopyLicense"
     ==> "Build"
-    =?>("ILMerge", configuration = "Release" && mergeBinaries)
-    //==> "RunTests"
+    ==> "RunTests"
     ==> "All"
 
 let target = getBuildParamOrDefault "target" "All"
