@@ -2,7 +2,6 @@ group Build
     source https://www.nuget.org/api/v2/
 
     nuget FAKE
-	nuget ILMerge
 
 group Tests
 	source https://www.nuget.org/api/v2/

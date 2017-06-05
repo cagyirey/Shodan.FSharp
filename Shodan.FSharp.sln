@@ -44,6 +44,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JSON", "JSON", "{F6845FC2-5
 		json\search\tokens.json = json\search\tokens.json
 	EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Shodan.FSharp.Tests", "tests\Shodan.FSharp.Tests\Shodan.FSharp.Tests.fsproj", "{C52E24FA-3ECF-47CE-AB50-B2DF82F58445}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC90107D-7C65-4DCB-BC13-BB3E0D75933F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52E24FA-3ECF-47CE-AB50-B2DF82F58445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52E24FA-3ECF-47CE-AB50-B2DF82F58445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52E24FA-3ECF-47CE-AB50-B2DF82F58445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52E24FA-3ECF-47CE-AB50-B2DF82F58445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
