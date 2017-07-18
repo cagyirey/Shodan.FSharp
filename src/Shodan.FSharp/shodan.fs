@@ -1,6 +1,6 @@
 ﻿namespace Shodan.FSharp
 
-exception ShodanError of string
+exception ShodanWebException of string
 
 type QueryOrder =
     | Ascending
@@ -25,7 +25,7 @@ type GeoBounding =
             | Box(l, r) -> sprintf "%G,%G" l r
 
 [<RequireQualifiedAccess>]
-module LinkType = 
+module private LinkType = 
 
     [<Literal>]
     let EthernetOrModem = "Ethernet or modem"
@@ -65,3 +65,51 @@ module LinkType =
 
     [<Literal>]
     let AX25RadioModem = "AX.25 radio modem"
+
+
+type Link =
+    | EthernetOrModem
+    | TunnelOrVPN
+    | DSL
+    | IPIPorSIT
+    | SLIP
+    | IPSecOrGRE
+    | VLAN
+    | JumboEthernet
+    | Google
+    | GIF
+    | PPTP
+    | Loopback
+    | AX25RadioModem
+
+    with 
+        member x.ToString =
+            match x with
+            | EthernetOrModem -> "Ethernet or modem"
+            | TunnelOrVPN -> "generic tunnel or VPN"
+            | DSL -> "DSL"
+            | IPIPorSIT -> "IPIP or SIT"
+            | SLIP ->  "SLIP"
+            | IPSecOrGRE -> "IPSec or GRE"
+            | VLAN -> "VLAN"
+            | JumboEthernet -> "jumbo Ethernet"
+            | Google -> "Google"
+            | GIF -> "GIF"
+            | PPTP -> "PPTP" 
+            | Loopback -> "loopback"
+            | AX25RadioModem -> "AX.25 radio modem"
+        static member Parse (str: string) : Link =
+            match str with
+            | LinkType.EthernetOrModem -> EthernetOrModem
+            | LinkType.TunnelOrVPN -> TunnelOrVPN
+            | LinkType.DSL -> DSL
+            | LinkType.IPIPorSIT -> IPIPorSIT
+            | LinkType.SLIP -> SLIP
+            | LinkType.IPSecOrGRE -> IPSecOrGRE
+            | LinkType.VLAN -> VLAN
+            | LinkType.JumboEthernet -> JumboEthernet
+            | LinkType.Google -> Google
+            | LinkType.GIF -> GIF
+            | LinkType.PPTP -> PPTP
+            | LinkType.Loopback -> Loopback
+            | LinkType.AX25RadioModem -> AX25RadioModem

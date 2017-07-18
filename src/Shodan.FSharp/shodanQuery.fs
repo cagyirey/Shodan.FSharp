@@ -5,7 +5,17 @@ open System.Net
 
 module Query = 
 
+    let private quoted str = sprintf "\"%s\"" str
+
     let private dateString (date: DateTime) = date.ToString("dd/MM/yyyy")
+
+    let QueryToString query = 
+        List.map (fun (k, v) -> 
+            if String.IsNullOrWhiteSpace v then
+                k
+            else 
+                sprintf "%s:%s" k v) query
+        |> String.concat " "
 
     /// Only show results that were collected after the given date (dd/mm/yyyy).
     let After (date: DateTime) = Facets.After, dateString date
@@ -44,22 +54,22 @@ module Query =
     let Netblock (mask: IPAddress) block = Facets.Netblock, sprintf "%O/%i" mask block
 
     /// Find devices based on the owner of the IP netblock.
-    let Org (org: string) = Facets.Org, org
+    let Org (org: string) = Facets.Org, quoted org
 
     /// Filter results based on the operating system of the device.
-    let OS (os: string) = Facets.OS, os
+    let OS (os: string) = Facets.OS, quoted os
 
     /// Find devices based on the services/ ports that are publicly exposed on the Internet.
     let Port (port: int) = Facets.Port, string port
 
     /// Search by postal code.
-    let Postal (postal: string) = Facets.Postal, postal
+    let Postal (postal: string) = Facets.Postal, quoted postal
 
     /// Filter using the name of the software/ product; ex: product:Apache
-    let Product (prod: string) = Facets.Product, prod
+    let Product (prod: string) = Facets.Product, quoted prod
 
     /// Search for devices based on the state/ region they are located in.
-    let State (state: string) = Facets.State, state
+    let State (state: string) = Facets.State, quoted  state
     
     /// Filter the results to include only products of the given version; ex: product:apache version:1.3.37
     let Version (ver: string) = Facets.Version, ver

@@ -1,11 +1,12 @@
 group Build
+	framework:net45
     source https://www.nuget.org/api/v2/
 
     nuget FAKE
 
 group Tests
 	source https://www.nuget.org/api/v2/
-	framework: auto-detect
+	framework: net45
 
 	nuget FsUnit
 	nuget NUnit.Console
@@ -16,5 +17,4 @@ group Main
 	framework: auto-detect
 
     nuget FSharp.Data
-	nuget FSharp.Configuration
 	nuget FSharp.Core >= 4.1

@@ -10,17 +10,34 @@ Open `Shodan.resx` and fill the `SecretKey` field with your Shodan.io API key. I
 
 ### Usage
 
+The following snippet displays the account details for the API key, then dumps detailed information about the first 100 hosts returned by a search query.
+
 ```fsharp
+open System.Net
+
 open Shodan.FSharp
 
-[<EntryPoint>]
-let main argv = 
-    // Acquire account info for the API key in config.yml
-    let accountInfo = Shodan.AccountInfo() |> Async.RunSynchronously
+let apiCredentials = NetworkCredential("", "##ApiKey##")
+
+let shodan = new Shodan(apiCredentials.SecurePassword)
+let accountInfo = shodan.AccountInfo() |> Async.RunSynchronously
+
+printfn "----- Account info -----\nUsername: %s\nCredits: %i\nDate created: %s\n------------------------"
+    accountInfo.DisplayName
+    accountInfo.Credits
+    (accountInfo.Created.ToString("dd/MM/yyyy"))
+
+let searchQuery = [
+    Query.OS "Linux 2.6.x"
+]
     
-    printfn "----- Account info -----\nUsername: %s\nCredits: %i\n\Date created: %s\n------------------------"
-        accountInfo.DisplayName
-        accountInfo.Credits
-        (accountInfo.Created.ToString("dd/MM/yyyy"))
+let results = 
+    shodan.Search.Search searchQuery
+    |> Async.RunSynchronously
+    
+printfn "First %i hosts returned for the search query \"%s\":\r\n\r\n%A"
+    results.Length
+    (Query.QueryToString searchQuery)
+    results
     0
 ```

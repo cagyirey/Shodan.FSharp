@@ -1,20 +1,42 @@
-﻿namespace Shodan.FSharp.Tests
+﻿namespace Shodan.FSharp
 
 open Shodan.FSharp
 
 open FsUnit
 open NUnit.Framework
 
-[<TestFixture>]
-module ``Creditless API tests`` =
+open System.Security
+open System.Net
 
-    [<Test>]
-    let ``Account is activated and has API credits`` () =
-        let accountInfo = Shodan.AccountInfo () |> Async.RunSynchronously
-        accountInfo.Member |> should equal true
-        accountInfo.Credits |> should be (greaterThan 0)
+[<CompilationRepresentationAttribute(CompilationRepresentationFlags.ModuleSuffix)>]
+module Tests = 
 
-    [<Test>]
-    let ``API key has remaining credits`` () =
-        let apiInfo = Shodan.ApiInfo () |> Async.RunSynchronously
-        [apiInfo.QueryCredits; apiInfo.ScanCredits] |> Seq.iter (should be (greaterThan 0))
+    let sho = new Shodan(NetworkCredential("", "##ApiKey##").SecurePassword)
+
+    [<TestFixture>]
+    module ``Creditless API tests`` =
+    
+        [<Test>]
+        let ``API key is activated and has API credits`` () =
+            let accountInfo = sho.AccountInfo () |> Async.RunSynchronously
+            accountInfo.Member |> should equal true
+            accountInfo.Credits |> should be (greaterThan 0)
+
+        [<Test>]
+        let ``API key has remaining credits`` () =
+            let apiInfo = sho.ApiInfo () |> Async.RunSynchronously
+            [apiInfo.QueryCredits; apiInfo.ScanCredits] |> Seq.iter (should be (greaterThan 0))
+
+    [<TestFixture>]
+    module `` API Credit tests`` =
+        
+        let searchQuery = [
+            Query.OS "Linux 2.6.x"
+            Query.Port 23
+        ]
+        
+        [<Test>]
+        let ``Can retrieve search facets`` () = 
+            let facets = sho.Search.Tokens(searchQuery) |> Async.RunSynchronously
+
+            facets.Filters

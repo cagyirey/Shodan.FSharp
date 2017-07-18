@@ -23,7 +23,10 @@ module JsonResponse =
         let HttpHeadersJson = JsonFolder + "/httpheaders.json"
 
         [<Literal>]
-        let Honeyscore = JsonFolder + "/labs/honeyscore.json"
+        let HoneyscoreJson = JsonFolder + "/labs/honeyscore.json"
+
+        [<Literal>]
+        let BannerJson = JsonFolder + "/banner.json"
 
         module Search =
 
@@ -93,7 +96,7 @@ module JsonResponse =
     type ApiInfoJson = JsonProvider<ApiInfoJson>
    
     type AccountInfoJson = JsonProvider<AccountInfoJson>
-   
+    
     module Scan =
 
         type ScanJson = JsonProvider<Scan.ScanJson>

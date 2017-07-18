@@ -3,7 +3,7 @@
 open System
 open System.Net
 
-module internal WebApi =
+module internal Http =
 
     [<AutoOpen>]
     module private Utils =

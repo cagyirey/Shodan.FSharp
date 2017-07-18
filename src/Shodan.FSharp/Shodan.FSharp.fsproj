@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Shodan.FSharp</RootNamespace>
     <AssemblyName>Shodan.FSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>Shodan.FSharp</Name>
@@ -59,14 +59,13 @@
   -->
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="config.fs" />
     <Compile Include="shodan.fs" />
     <Compile Include="shodanFacets.fs" />
     <Compile Include="shodanJson.fs" />
+    <Compile Include="banner.fs" />
     <Compile Include="shodanQuery.fs" />
     <Compile Include="shodanApi.fs" />
     <Compile Include="net.fs" />
-    <EmbeddedResource Include="Shodan.resx" />
     <None Include="Script.fsx" />
     <None Include="paket.references" />
   </ItemGroup>
@@ -77,28 +76,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
-      <ItemGroup>
-        <Reference Include="FSharp.Configuration">
-          <HintPath>..\..\packages\FSharp.Configuration\lib\net46\FSharp.Configuration.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="SharpYaml">
-          <HintPath>..\..\packages\FSharp.Configuration\lib\net46\SharpYaml.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ValueTuple">
-          <HintPath>..\..\packages\FSharp.Configuration\lib\net46\System.ValueTuple.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
       <ItemGroup>
         <Reference Include="FSharp.Core">
           <HintPath>..\..\packages\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
@@ -109,7 +87,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
       <ItemGroup>
         <Reference Include="System.Xml.Linq">
           <Paket>True</Paket>
