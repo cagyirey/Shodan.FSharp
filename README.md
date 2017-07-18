@@ -39,5 +39,4 @@ printfn "First %i hosts returned for the search query \"%s\":\r\n\r\n%A"
     results.Length
     (Query.QueryToString searchQuery)
     results
-    0
 ```
